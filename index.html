@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manejo del estrés académico · Guía interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mist:#F2F7F4; --card:#FFFFFF; --pine:#17322A; --pine-soft:#3E5C52;
+  --bosque:#1E7A5F; --bosque-deep:#125C46; --bosque-tint:#DCEFE7;
+  --honey:#C98A2B; --honey-tint:#F8ECD7;
+  --line:#D8E5DE; --danger:#B4472F; --danger-tint:#F7E3DC;
+  --radius:14px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Karla',sans-serif; background:var(--mist); color:var(--pine); line-height:1.65; font-size:16.5px;}
+h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; line-height:1.2; color:var(--pine);}
+button{font-family:'Karla',sans-serif; cursor:pointer;}
+button:focus-visible, a:focus-visible{outline:3px solid var(--honey); outline-offset:2px;}
+.wrap{max-width:880px; margin:0 auto; padding:0 20px;}
+
+/* Barra superior */
+.topbar{position:sticky; top:0; background:rgba(242,247,244,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); z-index:50;}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding:12px 20px;}
+.brand{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--bosque-deep);}
+.btn{border:none; border-radius:999px; padding:10px 20px; font-size:.95rem; font-weight:700; transition:transform .15s ease, background .2s;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--bosque); color:#fff;}
+.btn-primary:hover{background:var(--bosque-deep);}
+.btn-ghost{background:transparent; color:var(--bosque-deep); border:1.5px solid var(--bosque);}
+.btn-ghost:hover{background:var(--bosque-tint);}
+
+/* Vistas */
+.view{display:none; padding:40px 0 70px; animation:fade .4s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+/* Inicio */
+.hero{text-align:center; padding:56px 0 34px;}
+.eyebrow{display:inline-block; background:var(--honey-tint); color:#8A5D14; font-weight:700; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; padding:6px 14px; border-radius:999px; margin-bottom:18px;}
+.hero h1{font-size:clamp(2.1rem,5.5vw,3.2rem); margin-bottom:14px;}
+.hero p{max-width:560px; margin:0 auto 10px; color:var(--pine-soft);}
+.dato{font-family:'Fraunces',serif; font-size:1.05rem; color:var(--bosque-deep); background:var(--bosque-tint); display:inline-block; padding:10px 18px; border-radius:var(--radius); margin:14px 0 26px;}
+.menu-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin-top:8px;}
+.menu-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px 18px; text-align:left; transition:transform .18s ease, border-color .2s; display:flex; flex-direction:column; gap:8px;}
+.menu-card:hover{transform:translateY(-3px); border-color:var(--bosque);}
+.menu-card .num{font-family:'Fraunces',serif; color:var(--honey); font-weight:600; font-size:.9rem;}
+.menu-card h3{font-size:1.08rem;}
+.menu-card p{font-size:.88rem; color:var(--pine-soft);}
+
+/* Secciones */
+.sec-head{margin-bottom:26px;}
+.sec-head .num{font-family:'Fraunces',serif; color:var(--honey); font-weight:600;}
+.sec-head h2{font-size:clamp(1.6rem,4vw,2.2rem); margin:4px 0 8px;}
+.sec-head p{color:var(--pine-soft); max-width:640px;}
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px;}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;}
+.tag{display:inline-block; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 12px; border-radius:999px; margin-bottom:10px;}
+.tag-ok{background:var(--bosque-tint); color:var(--bosque-deep);}
+.tag-no{background:var(--danger-tint); color:var(--danger);}
+.tag-honey{background:var(--honey-tint); color:#8A5D14;}
+ul.clean{list-style:none;}
+ul.clean li{padding:8px 0 8px 26px; position:relative; border-bottom:1px dashed var(--line);}
+ul.clean li:last-child{border-bottom:none;}
+ul.clean li::before{content:"◆"; color:var(--bosque); position:absolute; left:4px; font-size:.7rem; top:14px;}
+.senal{cursor:pointer;}
+.senal summary{font-weight:700; font-size:1.02rem; padding:14px 18px; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+.senal summary::after{content:"+"; font-family:'Fraunces',serif; font-size:1.3rem; color:var(--bosque);}
+.senal[open] summary::after{content:"–";}
+.senal .body{padding:0 18px 16px; color:var(--pine-soft); font-size:.95rem;}
+.senal{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:10px;}
+
+/* Círculo vicioso */
+.ciclo{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; align-items:center; margin:18px 0;}
+.ciclo .paso{background:var(--card); border:1.5px solid var(--bosque); color:var(--bosque-deep); border-radius:999px; padding:10px 18px; font-weight:700; font-size:.92rem;}
+.ciclo .flecha{color:var(--honey); font-size:1.3rem; font-weight:700;}
+
+/* Respiración */
+.resp-zone{display:flex; flex-direction:column; align-items:center; padding:34px 0 10px;}
+.circle-wrap{width:230px; height:230px; display:flex; align-items:center; justify-content:center; margin-bottom:22px;}
+.circle{width:130px; height:130px; border-radius:50%; background:var(--bosque-tint); border:3px solid var(--bosque); display:flex; flex-direction:column; align-items:center; justify-content:center; transition:transform 1s ease-in-out;}
+.circle .fase{font-weight:700; color:var(--bosque-deep); font-size:1.02rem;}
+.circle .cuenta{font-family:'Fraunces',serif; font-size:2.2rem; color:var(--pine);}
+.resp-info{color:var(--pine-soft); margin-bottom:16px; text-align:center;}
+@media (prefers-reduced-motion: reduce){ .circle{transition:none !important;} .view{animation:none;} .menu-card{transition:none;} }
+
+/* Pomodoro */
+.pomo{display:flex; flex-direction:column; align-items:center; gap:14px; padding:10px 0;}
+.pomo .tiempo{font-family:'Fraunces',serif; font-size:3.6rem; color:var(--pine); letter-spacing:.03em;}
+.pomo .modo{font-weight:700; color:var(--bosque-deep); text-transform:uppercase; letter-spacing:.1em; font-size:.85rem;}
+.pomo .ciclos{color:var(--pine-soft); font-size:.9rem;}
+.controls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+
+/* Quiz */
+.q-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:26px; max-width:640px; margin:0 auto;}
+.q-num{color:var(--honey); font-weight:700; font-size:.85rem; letter-spacing:.1em; text-transform:uppercase;}
+.q-text{font-family:'Fraunces',serif; font-size:1.25rem; margin:10px 0 20px;}
+.q-btns{display:flex; gap:12px; flex-wrap:wrap;}
+.q-btn{flex:1; min-width:130px; padding:14px; border-radius:var(--radius); border:1.5px solid var(--bosque); background:transparent; font-weight:700; font-size:1rem; color:var(--bosque-deep);}
+.q-btn:hover{background:var(--bosque-tint);}
+.fb{margin-top:18px; padding:16px; border-radius:var(--radius); font-size:.95rem; display:none;}
+.fb.ok{display:block; background:var(--bosque-tint); color:var(--bosque-deep);}
+.fb.no{display:block; background:var(--danger-tint); color:var(--danger);}
+.progress{height:8px; background:var(--line); border-radius:99px; margin-bottom:22px; overflow:hidden;}
+.progress > div{height:100%; background:var(--bosque); width:0%; transition:width .3s ease;}
+
+/* Planificador */
+table.plan{width:100%; border-collapse:collapse; background:var(--card); font-size:.85rem;}
+table.plan th, table.plan td{border:1px solid var(--line); padding:9px 8px; text-align:left;}
+table.plan th{background:var(--bosque-tint); color:var(--bosque-deep); font-weight:700;}
+table.plan td{height:44px;}
+
+/* Navegación inferior */
+.secnav{display:flex; justify-content:space-between; gap:10px; margin-top:38px; flex-wrap:wrap;}
+
+/* Alerta ayuda */
+.alerta{border-left:5px solid var(--danger); background:var(--danger-tint); border-radius:0 var(--radius) var(--radius) 0; padding:18px 20px; margin:16px 0;}
+.contacto{border-left:5px solid var(--bosque); background:var(--bosque-tint); border-radius:0 var(--radius) var(--radius) 0; padding:18px 20px; margin:16px 0;}
+
+footer{border-top:1px solid var(--line); padding:26px 0 40px; text-align:center; color:var(--pine-soft); font-size:.85rem;}
+
+@media print{
+  body *{visibility:hidden;}
+  #print-plan, #print-plan *{visibility:visible;}
+  #print-plan{position:absolute; top:0; left:0; width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand">Manejo del estrés académico</span>
+    <button class="btn btn-ghost" onclick="go('inicio')">Menú</button>
+  </div>
+</div>
+
+<!-- ══════════ INICIO ══════════ -->
+<section id="inicio" class="view active">
+  <div class="wrap">
+    <div class="hero">
+      <span class="eyebrow">Guía interactiva · Psicología Clínica</span>
+      <h1>Que el estrés no controle tu semestre</h1>
+      <p>Un recurso psicoeducativo creado a partir de las respuestas de estudiantes como tú.</p>
+      <div class="dato">7 de cada 10 compañeros dijeron que la carga de tareas les genera estrés.</div>
+    </div>
+    <div class="menu-grid">
+      <button class="menu-card" onclick="go('que-es')"><span class="num">01</span><h3>¿Qué es el estrés académico?</h3><p>Eustrés, distrés y por qué no hay que eliminarlo, sino regularlo.</p></button>
+      <button class="menu-card" onclick="go('senales')"><span class="num">02</span><h3>Reconoce tus señales</h3><p>Cómo se manifiesta en tu cuerpo, tu mente y tu conducta.</p></button>
+      <button class="menu-card" onclick="go('sobrecarga')"><span class="num">03</span><h3>La sobrecarga</h3><p>La causa principal según el diagnóstico, y su círculo vicioso.</p></button>
+      <button class="menu-card" onclick="go('respiracion')"><span class="num">04</span><h3>Respiración 4-7-8</h3><p>Ejercicio guiado con animación para regularte en minutos.</p></button>
+      <button class="menu-card" onclick="go('tiempo')"><span class="num">05</span><h3>Organiza tu tiempo</h3><p>Pomodoro funcional, planificación semanal y regla de los 2 minutos.</p></button>
+      <button class="menu-card" onclick="go('examenes')"><span class="num">06</span><h3>Época de exámenes</h3><p>Estrategias para antes y durante las evaluaciones.</p></button>
+      <button class="menu-card" onclick="go('ayuda')"><span class="num">07</span><h3>¿Cuándo buscar ayuda?</h3><p>Señales de alerta y a dónde acudir en tu universidad.</p></button>
+      <button class="menu-card" onclick="go('quiz')"><span class="num">08</span><h3>Autoevaluación</h3><p>Mitos y realidades: pon a prueba lo que aprendiste.</p></button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 01 QUÉ ES ══════════ -->
+<section id="que-es" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>¿Qué es el estrés académico?</h2>
+      <p>Es la respuesta física, emocional y mental que aparece cuando las demandas del estudio —tareas, exámenes, plazos— superan (o creemos que superan) los recursos que tenemos para enfrentarlas.</p></div>
+    <div class="grid2">
+      <div class="card"><span class="tag tag-ok">Eustrés · el que ayuda</span>
+        <ul class="clean">
+          <li>Te activa y motiva ante un reto</li>
+          <li>Mejora tu concentración</li>
+          <li>Es puntual: aparece y desaparece</li>
+          <li>Ejemplo: los nervios que te impulsan a preparar bien una exposición</li>
+        </ul></div>
+      <div class="card"><span class="tag tag-no">Distrés · el que desgasta</span>
+        <ul class="clean">
+          <li>Te paraliza o agota</li>
+          <li>Bloquea tu memoria y atención</li>
+          <li>Es sostenido: no da tregua</li>
+          <li>Ejemplo: agotamiento constante que te impide empezar cualquier tarea</li>
+        </ul></div>
+    </div>
+    <div class="card" style="margin-top:16px; border-left:5px solid var(--honey);">
+      <strong>Idea clave:</strong> el objetivo no es eliminar el estrés — es evitar que se vuelva crónico y aprender a regularlo.
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('inicio')">← Menú</button><button class="btn btn-primary" onclick="go('senales')">Siguiente: tus señales →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 02 SEÑALES ══════════ -->
+<section id="senales" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Reconoce tus señales</h2>
+      <p>El 67% de los participantes indicó que el estrés afecta su bienestar emocional. Detectarlo a tiempo permite actuar antes del agotamiento. Toca cada categoría:</p></div>
+    <details class="senal"><summary>🫀 Señales físicas</summary><div class="body">Dolores de cabeza, tensión en cuello y hombros, problemas para dormir o sueño no reparador, fatiga constante, cambios en el apetito, malestar estomacal.</div></details>
+    <details class="senal"><summary>💭 Señales cognitivas</summary><div class="body">Dificultad para concentrarte o recordar, pensamientos repetitivos («no me va a alcanzar el tiempo», «no voy a poder»), sensación de mente saturada o en blanco.</div></details>
+    <details class="senal"><summary>😟 Señales emocionales</summary><div class="body">Irritabilidad o cambios de humor, sensación de agobio o de estar sobrepasado(a), desmotivación, ganas de abandonar.</div></details>
+    <details class="senal"><summary>🚶 Señales conductuales</summary><div class="body">Postergar tareas (procrastinación), aislarte de compañeros y amigos, abandonar actividades que antes disfrutabas.</div></details>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('que-es')">← Anterior</button><button class="btn btn-primary" onclick="go('sobrecarga')">Siguiente: la sobrecarga →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 03 SOBRECARGA ══════════ -->
+<section id="sobrecarga" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>La sobrecarga: la causa principal</h2>
+      <p>El 70% del grupo identificó la carga de tareas como su principal fuente de estrés. ¿Por qué nos abruma tanto?</p></div>
+    <div class="grid2">
+      <div class="card"><h3 style="font-size:1.05rem; margin-bottom:8px;">Acumulación</h3><p style="font-size:.95rem; color:var(--pine-soft);">Varias materias entregan trabajos en las mismas fechas: la demanda real se concentra en picos.</p></div>
+      <div class="card"><h3 style="font-size:1.05rem; margin-bottom:8px;">Percepción de falta de tiempo</h3><p style="font-size:.95rem; color:var(--pine-soft);">Sin visualizar cuánto tiempo tienes ni cuánto necesita cada tarea, todo parece urgente a la vez.</p></div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="font-size:1.05rem; margin-bottom:6px;">El círculo vicioso de la procrastinación</h3>
+      <div class="ciclo">
+        <span class="paso">Sobrecarga</span><span class="flecha">→</span>
+        <span class="paso">Estrés</span><span class="flecha">→</span>
+        <span class="paso">Postergar</span><span class="flecha">→</span>
+        <span class="paso">Acumulación</span><span class="flecha">→</span>
+        <span class="paso">Más estrés</span><span class="flecha">↺</span>
+      </div>
+      <p style="font-size:.95rem; color:var(--pine-soft);">El alivio de postergar es inmediato pero breve; el costo llega multiplicado. La sobrecarga no siempre se puede eliminar — pero sí se puede <strong>gestionar cómo la enfrentamos</strong>.</p>
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('senales')">← Anterior</button><button class="btn btn-primary" onclick="go('respiracion')">Siguiente: respira →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 04 RESPIRACIÓN ══════════ -->
+<section id="respiracion" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Técnica inmediata: respiración 4-7-8</h2>
+      <p>La respiración lenta activa la respuesta de relajación del cuerpo y baja la activación en pocos minutos. Siéntate con la espalda recta, hombros sueltos, y sigue el círculo:</p></div>
+    <div class="card resp-zone">
+      <div class="circle-wrap"><div class="circle" id="circle"><span class="fase" id="fase">Listo</span><span class="cuenta" id="cuenta">·</span></div></div>
+      <p class="resp-info" id="resp-info">Inhala 4 s por la nariz · sostén 7 s · exhala 8 s por la boca, como soplando una vela sin apagarla. Haremos 4 ciclos.</p>
+      <div class="controls">
+        <button class="btn btn-primary" id="resp-btn" onclick="toggleResp()">Comenzar ejercicio</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px; border-left:5px solid var(--honey);">
+      <strong>Consejos:</strong> practícala también en momentos de calma para tenerla lista cuando la necesites. Si sientes un mareo leve, usa tiempos más cortos (3-5-6) y aumenta gradualmente.
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('sobrecarga')">← Anterior</button><button class="btn btn-primary" onclick="go('tiempo')">Siguiente: tu tiempo →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 05 TIEMPO ══════════ -->
+<section id="tiempo" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Organiza para no acumular</h2>
+      <p>El 40% del grupo reconoció dejar tareas para el último momento. Estas herramientas atacan la sobrecarga de raíz:</p></div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <span class="tag tag-honey">Herramienta 1 · Pomodoro en vivo</span>
+      <p style="font-size:.95rem; color:var(--pine-soft); margin-bottom:6px;">Elige una sola tarea, trabaja 25 minutos sin interrupciones (celular fuera de la vista) y descansa 5. Empezar es lo más difícil: comprometerte con solo 25 minutos vence la resistencia inicial.</p>
+      <div class="pomo">
+        <span class="modo" id="pomo-modo">Enfoque</span>
+        <span class="tiempo" id="pomo-tiempo">25:00</span>
+        <span class="ciclos" id="pomo-ciclos">Ciclos completados: 0</span>
+        <div class="controls">
+          <button class="btn btn-primary" id="pomo-btn" onclick="togglePomo()">Iniciar</button>
+          <button class="btn btn-ghost" onclick="resetPomo()">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><span class="tag tag-honey">Herramienta 2 · Plan semanal</span>
+        <ul class="clean">
+          <li>15 minutos cada domingo</li>
+          <li>Anota todas las entregas de la semana</li>
+          <li>Ordénalas por fecha e importancia</li>
+          <li>Asigna a cada una un día y una hora</li>
+          <li>Planifica también el descanso</li>
+        </ul>
+        <button class="btn btn-ghost" style="margin-top:14px;" onclick="window.print()">Imprimir planificador</button>
+      </div>
+      <div class="card"><span class="tag tag-honey">Herramienta 3 · Regla de los 2 minutos</span>
+        <p style="font-size:.95rem; color:var(--pine-soft);">Si algo toma menos de 2 minutos —enviar un correo, anotar una fecha— hazlo de inmediato. Evita que lo pequeño se acumule y se sume al ruido mental.</p>
+      </div>
+    </div>
+
+    <div id="print-plan" style="margin-top:20px;">
+      <h3 style="margin-bottom:10px;">Planificador semanal</h3>
+      <table class="plan">
+        <tr><th style="width:90px;">Hora</th><th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th><th>Vie</th><th>Sáb</th><th>Dom</th></tr>
+        <tr><td>Mañana</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Tarde</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Noche</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Prioridad del día</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('respiracion')">← Anterior</button><button class="btn btn-primary" onclick="go('examenes')">Siguiente: exámenes →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 06 EXÁMENES ══════════ -->
+<section id="examenes" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>El estrés en época de exámenes</h2>
+      <p>Los exámenes y exposiciones son el momento donde el estrés llega a su punto más alto. Estrategias por etapa:</p></div>
+    <div class="grid2">
+      <div class="card"><span class="tag tag-ok">📅 Días antes</span>
+        <ul class="clean">
+          <li>Sesiones cortas y repartidas, no maratones nocturnas: la memoria consolida con repaso espaciado</li>
+          <li>Ponte a prueba: explica el tema en voz alta</li>
+          <li>Dormir es parte del estudio, no tiempo perdido</li>
+        </ul></div>
+      <div class="card"><span class="tag tag-ok">🕐 Momentos antes</span>
+        <ul class="clean">
+          <li>Llega con tiempo: la prisa dispara la activación</li>
+          <li>Evita el «repaso de pánico» en la puerta</li>
+          <li>Haz 2 o 3 ciclos de respiración 4-7-8</li>
+          <li>Cambia «me va a ir mal» por «me preparé y responderé lo que sé»</li>
+        </ul></div>
+      <div class="card"><span class="tag tag-ok">✍️ Durante el examen</span>
+        <ul class="clean">
+          <li>Lee todo y empieza por lo que sí sabes</li>
+          <li>Si te bloqueas: suelta el lápiz, respira profundo 3 veces, pasa a otra pregunta</li>
+          <li>Asigna minutos por sección</li>
+        </ul></div>
+      <div class="card"><span class="tag tag-ok">🎤 En exposiciones</span>
+        <ul class="clean">
+          <li>Practica en voz alta al menos 2 veces</li>
+          <li>Los nervios bajan tras el primer minuto: prepara muy bien tu inicio</li>
+        </ul></div>
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('tiempo')">← Anterior</button><button class="btn btn-primary" onclick="go('ayuda')">Siguiente: buscar ayuda →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 07 AYUDA ══════════ -->
+<section id="ayuda" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">07</span><h2>¿Cuándo el estrés deja de ser normal?</h2>
+      <p>El estrés académico es común, pero hay señales que indican que es momento de buscar apoyo profesional:</p></div>
+    <div class="alerta">
+      <strong>Señales de alerta</strong>
+      <ul style="margin:8px 0 0 20px; font-size:.95rem;">
+        <li>El malestar es intenso y dura varias semanas sin aliviarse</li>
+        <li>Afecta seriamente tu sueño, alimentación o relaciones</li>
+        <li>Sientes que no puedes con las actividades cotidianas, no solo las académicas</li>
+        <li>Momentos frecuentes de angustia intensa</li>
+        <li>Has pensado en abandonar la carrera por el malestar emocional</li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:5px solid var(--honey); margin-bottom:16px;">
+      <strong>Buscar ayuda no es debilidad: es una estrategia de afrontamiento inteligente.</strong>
+    </div>
+    <div class="contacto">
+      <strong>¿A dónde acudir?</strong>
+      <ul style="margin:8px 0 0 20px; font-size:.95rem;">
+        <li>Departamento de bienestar estudiantil: <em>[completar con el contacto de tu universidad]</em></li>
+        <li>Docentes o tutores de confianza</li>
+        <li>Servicios de salud mental de la comunidad</li>
+      </ul>
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('examenes')">← Anterior</button><button class="btn btn-primary" onclick="go('quiz')">Siguiente: autoevalúate →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ 08 QUIZ ══════════ -->
+<section id="quiz" class="view">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">08</span><h2>Autoevaluación: ¿mito o realidad?</h2>
+      <p>Seis afirmaciones sobre el estrés académico. Decide si cada una es mito o realidad.</p></div>
+    <div class="q-card">
+      <div class="progress"><div id="q-bar"></div></div>
+      <div id="q-body"></div>
+    </div>
+    <div class="secnav"><button class="btn btn-ghost" onclick="go('ayuda')">← Anterior</button><button class="btn btn-primary" onclick="go('cierre')">Ir al cierre →</button></div>
+  </div>
+</section>
+
+<!-- ══════════ CIERRE ══════════ -->
+<section id="cierre" class="view">
+  <div class="wrap">
+    <div class="hero">
+      <span class="eyebrow">Cierre</span>
+      <h1 style="font-size:clamp(1.8rem,4.5vw,2.6rem);">Tu bienestar también es parte de tu formación</h1>
+      <p>El estrés académico no desaparece por completo — pero ahora tienes herramientas para reconocerlo, regularlo y evitar que controle tu semestre.</p>
+      <div class="dato">Reto de la semana: elige <strong>una sola</strong> estrategia de esta guía y aplícala. Lo pequeño y constante es lo que genera impacto real.</div>
+      <div class="controls">
+        <button class="btn btn-primary" onclick="go('respiracion')">Repetir la respiración</button>
+        <button class="btn btn-ghost" onclick="go('inicio')">Volver al menú</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Recurso psicoeducativo elaborado por estudiantes de Psicología Clínica · [Universidad] · 2026<br>
+    Este material es educativo y no sustituye la atención psicológica profesional.
+  </div>
+</footer>
+
+<script>
+/* ── Navegación ── */
+function go(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(id==='quiz' && !quizStarted){ startQuiz(); }
+}
+
+/* ── Respiración 4-7-8 ── */
+const fases=[["Inhala",4,1.55],["Sostén",7,1.55],["Exhala",8,1.0]];
+let respOn=false, respTimer=null, cicloResp=0;
+const circle=document.getElementById('circle'), faseEl=document.getElementById('fase'),
+      cuentaEl=document.getElementById('cuenta'), respBtn=document.getElementById('resp-btn'),
+      respInfo=document.getElementById('resp-info');
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function toggleResp(){ respOn ? stopResp() : startResp(); }
+function startResp(){
+  respOn=true; cicloResp=0; respBtn.textContent='Detener';
+  runFase(0);
+}
+function runFase(i){
+  if(!respOn) return;
+  const [nombre,seg,escala]=fases[i];
+  faseEl.textContent=nombre;
+  if(!reduceMotion){ circle.style.transitionDuration=seg+'s'; circle.style.transform=`scale(${escala})`; }
+  let restante=seg;
+  cuentaEl.textContent=restante;
+  respTimer=setInterval(()=>{
+    restante--;
+    if(restante>0){ cuentaEl.textContent=restante; }
+    else{
+      clearInterval(respTimer);
+      const next=(i+1)%3;
+      if(next===0){
+        cicloResp++;
+        respInfo.textContent=`Ciclo ${cicloResp} de 4 completado.`;
+        if(cicloResp>=4){ finResp(); return; }
+      }
+      runFase(next);
+    }
+  },1000);
+}
+function finResp(){
+  stopResp();
+  faseEl.textContent='Muy bien'; cuentaEl.textContent='✓';
+  respInfo.textContent='Ejercicio completo. Nota cómo se siente tu cuerpo ahora.';
+}
+function stopResp(){
+  respOn=false; clearInterval(respTimer);
+  respBtn.textContent='Comenzar ejercicio';
+  if(!reduceMotion){ circle.style.transitionDuration='1s'; circle.style.transform='scale(1)'; }
+  if(faseEl.textContent!=='Muy bien'){ faseEl.textContent='Listo'; cuentaEl.textContent='·'; }
+}
+
+/* ── Pomodoro ── */
+let pomoSeg=25*60, pomoOn=false, pomoTimer=null, enFoco=true, ciclosPomo=0;
+const pomoTiempo=document.getElementById('pomo-tiempo'), pomoModo=document.getElementById('pomo-modo'),
+      pomoBtn=document.getElementById('pomo-btn'), pomoCiclos=document.getElementById('pomo-ciclos');
+function pintaPomo(){
+  const m=String(Math.floor(pomoSeg/60)).padStart(2,'0'), s=String(pomoSeg%60).padStart(2,'0');
+  pomoTiempo.textContent=`${m}:${s}`;
+}
+function togglePomo(){
+  if(pomoOn){ clearInterval(pomoTimer); pomoOn=false; pomoBtn.textContent='Reanudar'; return; }
+  pomoOn=true; pomoBtn.textContent='Pausar';
+  pomoTimer=setInterval(()=>{
+    pomoSeg--;
+    if(pomoSeg<0){
+      if(enFoco){ ciclosPomo++; pomoCiclos.textContent=`Ciclos completados: ${ciclosPomo}`;
+        enFoco=false; pomoSeg=5*60; pomoModo.textContent='Descanso'; }
+      else{ enFoco=true; pomoSeg=25*60; pomoModo.textContent='Enfoque'; }
+    }
+    pintaPomo();
+  },1000);
+}
+function resetPomo(){
+  clearInterval(pomoTimer); pomoOn=false; enFoco=true; pomoSeg=25*60;
+  pomoModo.textContent='Enfoque'; pomoBtn.textContent='Iniciar'; pintaPomo();
+}
+pintaPomo();
+
+/* ── Quiz ── */
+const preguntas=[
+ {t:"«El estrés siempre es malo y hay que eliminarlo por completo.»", r:"mito",
+  e:"En niveles moderados, el estrés (eustrés) nos activa y mejora el rendimiento. El problema es cuando se vuelve intenso y sostenido."},
+ {t:"«Estudiar toda la noche antes del examen es la mejor forma de aprovechar el tiempo.»", r:"mito",
+  e:"La falta de sueño deteriora la memoria y la concentración justo cuando más las necesitas. El repaso espaciado es más efectivo."},
+ {t:"«Postergar las tareas alivia el estrés.»", r:"mito",
+  e:"El alivio es inmediato pero momentáneo; la acumulación posterior multiplica el estrés."},
+ {t:"«La respiración lenta puede reducir la activación física del estrés en pocos minutos.»", r:"realidad",
+  e:"La respiración lenta y profunda activa la respuesta de relajación del organismo."},
+ {t:"«Pedir ayuda psicológica significa que no eres capaz de manejar la universidad.»", r:"mito",
+  e:"Buscar apoyo a tiempo es una estrategia de afrontamiento eficaz y una señal de autoconocimiento."},
+ {t:"«Planificar la semana en 15 minutos puede reducir la sensación de sobrecarga.»", r:"realidad",
+  e:"Visualizar las tareas y asignarles un tiempo concreto reduce la percepción de caos y urgencia."}
+];
+let qi=0, aciertos=0, quizStarted=false;
+const qBody=document.getElementById('q-body'), qBar=document.getElementById('q-bar');
+function startQuiz(){ quizStarted=true; qi=0; aciertos=0; pintaPregunta(); }
+function pintaPregunta(){
+  qBar.style.width=(qi/preguntas.length*100)+'%';
+  const p=preguntas[qi];
+  qBody.innerHTML=`
+    <span class="q-num">Afirmación ${qi+1} de ${preguntas.length}</span>
+    <p class="q-text">${p.t}</p>
+    <div class="q-btns">
+      <button class="q-btn" onclick="responder('mito')">Mito</button>
+      <button class="q-btn" onclick="responder('realidad')">Realidad</button>
+    </div>
+    <div class="fb" id="q-fb"></div>`;
+}
+function responder(op){
+  const p=preguntas[qi], fb=document.getElementById('q-fb'), ok=(op===p.r);
+  if(ok) aciertos++;
+  fb.className='fb '+(ok?'ok':'no');
+  fb.innerHTML=`<strong>${ok?'¡Correcto!':'No exactamente.'}</strong> Es ${p.r==='mito'?'un mito':'una realidad'}. ${p.e}
+    <div style="margin-top:12px;"><button class="btn btn-primary" onclick="siguiente()">${qi<preguntas.length-1?'Siguiente':'Ver resultado'}</button></div>`;
+  document.querySelectorAll('.q-btn').forEach(b=>b.disabled=true);
+}
+function siguiente(){
+  qi++;
+  if(qi<preguntas.length){ pintaPregunta(); }
+  else{
+    qBar.style.width='100%';
+    let msg = aciertos>=5 ? 'Dominas los conceptos clave del manejo del estrés.'
+            : aciertos>=3 ? 'Buen avance — repasa las secciones donde dudaste.'
+            : 'Vuelve a recorrer la guía: cada sección refuerza estas ideas.';
+    qBody.innerHTML=`
+      <span class="q-num">Resultado</span>
+      <p class="q-text">Acertaste ${aciertos} de ${preguntas.length}</p>
+      <p style="color:var(--pine-soft); margin-bottom:18px;">${msg}</p>
+      <div class="controls">
+        <button class="btn btn-primary" onclick="startQuiz()">Intentar de nuevo</button>
+        <button class="btn btn-ghost" onclick="go('cierre')">Ir al cierre</button>
+      </div>`;
+  }
+}
+</script>
+</body>
+</html>
